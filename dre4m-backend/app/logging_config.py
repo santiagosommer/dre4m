@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Get the logging level from an environment variable, DEBUG is the default
+# Get the logging level from an environment variable, DEBUG as default
 log_level = os.getenv('LOG_LEVEL', 'DEBUG').upper()
 
 

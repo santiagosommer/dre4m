@@ -2,11 +2,14 @@
 from typing import List
 from .connection import SessionLocal
 from .models.users import User
+
+# SQLAlchemy imports
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import NoResultFound
 
 
 def create_user(email: str, password: str) -> User:
@@ -79,5 +82,23 @@ def update_user():
     pass
 
 
-def delete_user():
-    pass
+def delete_user(email: str):
+    db = SessionLocal()
+    try:
+        user_to_delete = get_user(email)
+
+        if not user_to_delete:
+            raise NoResultFound
+
+        db.delete(user_to_delete)
+        db.commit()
+        print(f"User with email {email} deleted.")
+    except NoResultFound as e:
+        print(f"User with email {email} not found: {e}")
+        raise e
+    except SQLAlchemyError as e:
+        db.rollback()
+        print(f"Error deleting user with email {email}: {e}")
+        raise e
+    finally:
+        db.close()

@@ -1,8 +1,9 @@
 # From imports
-from sqlalchemy.orm import Session
-from sqlalchemy import select
+from typing import List
 from .connection import SessionLocal
 from .models.users import User
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.exc import IntegrityError
@@ -54,14 +55,24 @@ def get_user(email: str) -> User | None:
         return user_match
     except MultipleResultsFound as e:
         print(f"Multiple users with {email} found: {e}")
+        raise e
     except SQLAlchemyError as e:
         print(f"Error getting user with email {email}: {e}")
+        raise e
     finally:
         db.close()
 
 
-def list_users():
-    pass
+def list_users() -> List[User] | None:
+    db = SessionLocal()
+    try:
+        users = db.query(User).all()
+        return users
+    except SQLAlchemyError as e:
+        print(f"Error listing users: {e}")
+        raise e
+    finally:
+        db.close()
 
 
 def update_user():

@@ -5,10 +5,37 @@ from .connection import SessionLocal
 from .models.users import User
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import IntegrityError
 
 
-def create_user(email: str, password: str):
-    pass
+def create_user(email: str, password: str) -> User:
+    """
+    Create a new user with the given email and password.
+
+    :param email: Email of the user
+    :param password: Password of the user
+    :return: User object
+    """
+    db: Session = SessionLocal()
+    try:
+        db_user: User = User(email=email, password=password)
+        # Add the object to the session
+        db.add(db_user)
+        # Commit the session to apply the changes to the database
+        db.commit()
+        # Refresh the object to get the id
+        db.refresh(db_user)
+        return db_user
+    except IntegrityError as e:
+        db.rollback()
+        print(f"User with email {email} already exists: {e}")
+        raise e
+    except SQLAlchemyError as e:
+        db.rollback()
+        print(f"Error creating user with email {email}: {e}")
+        raise e
+    finally:
+        db.close()
 
 
 def get_user(email: str) -> User | None:
@@ -34,19 +61,12 @@ def get_user(email: str) -> User | None:
 
 
 def list_users():
-    db: Session = SessionLocal()
     pass
 
 
 def update_user():
-    db: Session = SessionLocal()
     pass
 
 
 def delete_user():
-    db: Session = SessionLocal()
     pass
-
-
-# Test the function
-print(get_user('nuevo_usuario@example.com'))

@@ -1,17 +1,27 @@
+# Imports
+import os
+
+# From imports
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Cargar variables de entorno desde .env
+# Remove after developing the app
+load_dotenv()
 
-# URL de conexión a PostgreSQL
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/dre4mdb")
 
-# Crear el motor de la base de datos
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://user:password@localhost:5432/dre4mdb"
+)
+
+# Creates database engine with lazy initialization
+# SSOT: Engine only created once
+# https://en.wikipedia.org/wiki/Single_source_of_truth
+# https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine
 engine = create_engine(DATABASE_URL)
 
-# Crear una sesión
+# Created session uses the same instance of the engine
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base para los modelos

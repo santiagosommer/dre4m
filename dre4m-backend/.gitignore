@@ -1,3 +1,17 @@
-# Ignore virtual environment folder
-.venv/
+# Ignorar archivos y directorios de Python
+__pycache__/
+
+
+# Ignorar archivos de entorno virtual
 .env
+.venv
+venv/
+
+# Ignorar archivos de logs
+*.log
+
+
+# Ignorar archivos específicos de __pycache__
+app/db/utils/__pycache__/init_db.cpython-310.pyc
+app/db/utils/__pycache__/init_queries.cpython-310.pyc
+

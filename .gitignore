@@ -1,2 +1,16 @@
 # Ignore macOS specific files
 .DS_Store
+
+# Logs
+*.log
+
+# Node.js dependencies
+node_modules
+
+# Python cache files and directories
+__pycache__/
+
+# Python virtual environment files
+.env
+.venv
+venv/

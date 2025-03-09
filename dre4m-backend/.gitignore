@@ -1,17 +1,17 @@
-# Ignorar archivos y directorios de Python
+# Ignore Python cache files and directories
 __pycache__/
 
-
-# Ignorar archivos de entorno virtual
+# Ignore virtual environment files
 .env
 .venv
 venv/
 
-# Ignorar archivos de logs
+# Ignore log files
 *.log
 
-
-# Ignorar archivos específicos de __pycache__
+# Ignore specific __pycache__ files
 app/db/utils/__pycache__/init_db.cpython-310.pyc
 app/db/utils/__pycache__/init_queries.cpython-310.pyc
 
+# Ignore macOS specific files
+.DS_Store

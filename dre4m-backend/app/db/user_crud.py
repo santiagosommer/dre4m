@@ -7,10 +7,12 @@ from ..logging_config import logger
 # SQLAlchemy imports
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import MultipleResultsFound
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.exc import (
+    MultipleResultsFound,
+    SQLAlchemyError,
+    IntegrityError,
+    NoResultFound
+)
 
 
 def create_user(email: str, password: str) -> User | None:
@@ -20,15 +22,20 @@ def create_user(email: str, password: str) -> User | None:
     :param email: Email of the user
     :param password: Password of the user
     :return: User object if the user was created successfully, None otherwise
+    :raises IntegrityError: If a user with the given email already exists.
+    :raises SQLAlchemyError: If there was an error creating the user.
     """
     db: Session = SessionLocal()
     try:
+        if get_user(email):
+            raise IntegrityError("User with this email already exists.",
+                                 params={"email": email},
+                                 orig=Exception("IntegrityError"))
+
         db_user: User = User(email=email, password=password)
-        # Add the object to the session
         db.add(db_user)
-        # Commit the session to apply the changes to the database
         db.commit()
-        # Refresh the object to get the id
+        # Refresh the object to update the id
         db.refresh(db_user)
 
         logger.info(f"User with email {email} created successfully.")
@@ -36,22 +43,25 @@ def create_user(email: str, password: str) -> User | None:
     except IntegrityError:
         db.rollback()
         logger.error(f"User with email {email} already exists.")
-        return None
+        raise
     except SQLAlchemyError:
         db.rollback()
         logger.error(f"Error creating user with email {email}.")
-        return None
+        raise
     finally:
         db.close()
 
 
 def get_user(email: str) -> User | None:
     """
-    Check if a user with the given username already exists in the database.
+    Check if a user with the given email already exists in the database.
     SQLAlchemy uses parametric queries to prevent SQL injection attacks.
 
     :param email: Email to check
     :return: User object if the user exists, None otherwise
+    :raises MultipleResultsFound: If multiple users are found with the given 
+    email.
+    :raises SQLAlchemyError: If there was an error getting the user.
     """
     db: Session = SessionLocal()
     try:
@@ -66,8 +76,10 @@ def get_user(email: str) -> User | None:
         return user_match
     except MultipleResultsFound:
         logger.error(f"Multiple users found with email {email}.")
+        raise
     except SQLAlchemyError:
         logger.error(f"Error getting user with email {email}.")
+        raise
     finally:
         db.close()
 
@@ -77,6 +89,7 @@ def list_users() -> List[User] | None:
     List all users in the database.
 
     :return: List of User objects
+    :raises SQLAlchemyError: If there was an error listing the users.
     """
     db = SessionLocal()
     try:
@@ -84,6 +97,7 @@ def list_users() -> List[User] | None:
         return users
     except SQLAlchemyError:
         logger.error("Error listing users")
+        raise
     finally:
         db.close()
 
@@ -97,6 +111,8 @@ def delete_user(email: str) -> None:
     Delete a user with the given email.
 
     :param email: Email of the user to delete
+    :raises NoResultFound: If no user is found with the given email.
+    :raises SQLAlchemyError: If there was an error deleting the user.
     """
     db = SessionLocal()
     try:
@@ -110,6 +126,7 @@ def delete_user(email: str) -> None:
         logger.info(f"User with email {email} deleted successfully.")
     except NoResultFound:
         logger.error(f"User with email {email} not found.")
+        raise
     except SQLAlchemyError:
         db.rollback()
         logger.error(f"Error deleting user with email {email}.")

@@ -24,5 +24,6 @@ engine = create_engine(DATABASE_URL)
 # Created session uses the same instance of the engine
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base para los modelos
+# Base class for declarative class definitions
+# Base.metadata.create_all(bind=engine)
 Base = declarative_base()

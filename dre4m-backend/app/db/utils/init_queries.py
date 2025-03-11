@@ -1,6 +1,7 @@
 # From imports
 from sqlalchemy.sql import text
 
+
 # SQL queries for initializing the database
 
 # Create the users table

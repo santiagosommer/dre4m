@@ -1,3 +1,6 @@
+"""
+This module configures the logging for the application.
+"""
 # Imports
 import os
 # https://docs.python.org/3/howto/logging.html#logging-basic-tutorial

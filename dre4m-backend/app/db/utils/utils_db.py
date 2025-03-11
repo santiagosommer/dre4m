@@ -8,7 +8,7 @@ from ..connection import SessionLocal
 from ...exceptions import InitDatabaseError
 from ...logging_config import logger
 
-# SQKAlchemy imports
+# SQLAlchemy imports
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import text
 

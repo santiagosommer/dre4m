@@ -1,6 +1,5 @@
 # From imports
 from typing import List
-from .connection import SessionLocal
 from .models.users_models import User
 from ..logging_config import logger
 
@@ -15,7 +14,7 @@ from sqlalchemy.exc import (
 )
 
 
-def create_user(email: str, password: str) -> User | None:
+def crud_create_user(db: Session, email: str, password: str) -> User | None:
     """
     Create a new user with the given email and password.
 
@@ -25,9 +24,8 @@ def create_user(email: str, password: str) -> User | None:
     :raises IntegrityError: If a user with the given email already exists.
     :raises SQLAlchemyError: If there was an error creating the user.
     """
-    db: Session = SessionLocal()
     try:
-        if get_user(email):
+        if crud_get_user(db, email):
             raise IntegrityError("User with this email already exists.",
                                  params={"email": email},
                                  orig=Exception("IntegrityError"))
@@ -48,11 +46,9 @@ def create_user(email: str, password: str) -> User | None:
         db.rollback()
         logger.error(f"Error creating user with email {email}.")
         raise
-    finally:
-        db.close()
 
 
-def get_user(email: str) -> User | None:
+def crud_get_user(db: Session, email: str) -> User | None:
     """
     Check if a user with the given email already exists in the database.
     SQLAlchemy uses parametric queries to prevent SQL injection attacks.
@@ -63,7 +59,6 @@ def get_user(email: str) -> User | None:
     email.
     :raises SQLAlchemyError: If there was an error getting the user.
     """
-    db: Session = SessionLocal()
     try:
         where_user_query = select(User).where(
             User.email == email)  # type: ignore
@@ -80,33 +75,28 @@ def get_user(email: str) -> User | None:
     except SQLAlchemyError:
         logger.error(f"Error getting user with email {email}.")
         raise
-    finally:
-        db.close()
 
 
-def list_users() -> List[User] | None:
+def crud_list_users(db: Session) -> List[User] | None:
     """
     List all users in the database.
 
     :return: List of User objects
     :raises SQLAlchemyError: If there was an error listing the users.
     """
-    db = SessionLocal()
     try:
         users = db.query(User).all()
         return users
     except SQLAlchemyError:
         logger.error("Error listing users")
         raise
-    finally:
-        db.close()
 
 
-def update_user():
+def crud_update_user():
     pass
 
 
-def delete_user(email: str) -> None:
+def crud_delete_user(db: Session, email: str) -> None:
     """
     Delete a user with the given email.
 
@@ -114,9 +104,8 @@ def delete_user(email: str) -> None:
     :raises NoResultFound: If no user is found with the given email.
     :raises SQLAlchemyError: If there was an error deleting the user.
     """
-    db = SessionLocal()
     try:
-        user_to_delete = get_user(email)
+        user_to_delete = crud_get_user(db, email)
 
         if not user_to_delete:
             raise NoResultFound
@@ -131,5 +120,3 @@ def delete_user(email: str) -> None:
         db.rollback()
         logger.error(f"Error deleting user with email {email}.")
         raise SQLAlchemyError
-    finally:
-        db.close()

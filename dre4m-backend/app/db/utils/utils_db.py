@@ -47,14 +47,11 @@ def create_db_user():
 
     # Check if the user already exists
     cur.execute(
-        sql.SQL(
-            "SELECT 1 FROM pg_roles WHERE rolname='{}';").format(
-            sql.Identifier(DB_NEW_USER)
-        )
+        "SELECT 1 FROM pg_roles WHERE rolname = %s;", (DB_NEW_USER,)
     )
 
     exists = cur.fetchone()
-
+    print(exists)
     if not exists:
         cur.execute(
             sql.SQL(
@@ -78,6 +75,7 @@ def create_db():
     Creates the database if it does not exist.
     """
     try:
+        # Connect to the database
         conn = psycopg2.connect(
             dbname="postgres",
             user=DB_NEW_USER,
@@ -94,6 +92,7 @@ def create_db():
         )
         exists = cur.fetchone()
 
+        # If the database does not exist, create it
         if not exists:
             cur.execute(
                 sql.SQL("CREATE DATABASE {} OWNER {}").format(
@@ -101,12 +100,13 @@ def create_db():
                     sql.Identifier(DB_NEW_USER)
                 )
             )
+            # Revoke all privileges from the public role and grant connect and temporary privileges
             cur.execute(
                 sql.SQL("REVOKE ALL PRIVILEGES ON DATABASE {} FROM PUBLIC;").format(
                     sql.Identifier(DB_NAME))
             )
             cur.execute(
-                sql.SQL("GRANT CONNECT, TEMPORARY ON DATABASE {} TO {};").format(
+                sql.SQL("GRANT CONNECT, CREATE ON DATABASE {} TO {};").format(
                     sql.Identifier(DB_NAME),
                     sql.Identifier(DB_NEW_USER)
                 )
@@ -126,7 +126,6 @@ def create_tables():
     """
     Creates the tables defined in the SQLAlchemy models.
     """
-
     DATABASE_URL = sa.URL.create(
         drivername="postgresql",
         username=DB_NEW_USER,
@@ -135,7 +134,6 @@ def create_tables():
         port=DB_PORT,
         database=DB_NAME
     )
-
     engine = create_engine(DATABASE_URL, echo=False)
     Base.metadata.create_all(bind=engine)
     logger.info(f'Created tables: {list(Base.metadata.tables.keys())}')

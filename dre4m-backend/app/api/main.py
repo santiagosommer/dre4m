@@ -9,10 +9,10 @@ load_dotenv()
 
 app = FastAPI()
 
-# Configuración de CORS
+# CORS configuration
 origins = [
-    "http://localhost:5173",  # Reemplaza con el origen de tu frontend
-    "http://127.0.0.1:8000",  # Reemplaza con el origen de tu frontend
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
 ]
 
 app.add_middleware(

@@ -1,59 +1,139 @@
 # Imports
 import os
+import psycopg2
+import sqlalchemy as sa
+import psycopg2.sql as sql
 
 # From imports
+from sqlalchemy import create_engine
 from dotenv import load_dotenv
-from .init_queries import CREATE_USERS_TABLE_QUERY
-from ..connection import SessionLocal
-from ...exceptions import InitDatabaseError
-from ...logging_config import logger
+from app.exceptions import MissingEnvironmentVariableError
+from app.logging_config import logger
+from app.db.models.users_models import Base
 
-# SQKAlchemy imports
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.sql import text
+"""
+This module contains utility functions for creating the database and tables.
+"""
 
 # Remove after developing the app
 load_dotenv()
 
-DB_USER_QUERY = os.getenv(
-    "CREATE_DB_USERS_QUERY"
-)
+# Missing password in the connection string
+DEFAULT_DB_USER = os.getenv("DEFAULT_DB_USER")
+DB_NEW_USER = os.getenv("DB_USER")
+DB_NEW_USER_PASSWORD = os.getenv("DB_USER_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+
+if not all([DEFAULT_DB_USER, DB_NEW_USER,
+            DB_NEW_USER_PASSWORD, DB_HOST,
+            DB_PORT, DB_NAME]):
+    raise MissingEnvironmentVariableError("Missing environment variables")
 
 
 def create_db_user():
     """
-    Creates the database user 'dream_admin' if it does not exist.
-    It logs the result of the operation.
+    Creates a database user if it does not exist.
+    """
+    conn = psycopg2.connect(
+        dbname='postgres',
+        user=DEFAULT_DB_USER,
+        host=DB_HOST,
+        port=DB_PORT
+    )
+    conn.autocommit = True
+    cur = conn.cursor()
+
+    # Check if the user already exists
+    cur.execute(
+        "SELECT 1 FROM pg_roles WHERE rolname = %s;", (DB_NEW_USER,)
+    )
+    exists = cur.fetchone()
+
+    # Creates the user if it does not exist
+    if not exists:
+        cur.execute(
+            sql.SQL(
+                "CREATE USER {} WITH ENCRYPTED "
+                "PASSWORD '{}' "
+                "CREATEDB CREATEROLE REPLICATION BYPASSRLS LOGIN;").format(
+                sql.Identifier(DB_NEW_USER),
+                sql.Identifier(DB_NEW_USER_PASSWORD)
+            )
+        )
+        logger.info(f"User {DB_NEW_USER} created.")
+    else:
+        logger.info(f"User {DB_NEW_USER} already exists.")
+
+    cur.close()
+    conn.close()
+
+
+def create_db():
+    """
+    Creates the database if it does not exist.
     """
     try:
-        # Create the new database user
-        db = SessionLocal()
+        # Connect to the database
+        conn = psycopg2.connect(
+            dbname="postgres",
+            user=DB_NEW_USER,
+            password=DB_NEW_USER_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT
+        )
+        conn.autocommit = True
+        cur = conn.cursor()
 
-        if DB_USER_QUERY is None:
-            raise InitDatabaseError(
-                "DB_USER_QUERY environment variable is not set")
+        # Check if the database exists
+        cur.execute(
+            "SELECT 1 FROM pg_database WHERE datname = %s;", (DB_NAME,)
+        )
+        exists = cur.fetchone()
 
-        db.execute(text(DB_USER_QUERY))
-        db.commit()
-        db.close()
-        logger.info("Database admin user created successfully.")
-    except SQLAlchemyError:
-        logger.error("Error creating database user 'dream_admin'")
-        raise InitDatabaseError("Error creating database user")
+        # If the database does not exist, create it
+        if not exists:
+            cur.execute(
+                sql.SQL("CREATE DATABASE {} OWNER {}").format(
+                    sql.Identifier(DB_NAME),
+                    sql.Identifier(DB_NEW_USER)
+                )
+            )
+            # Revoke all privileges from the public role and grant connect and temporary privileges
+            cur.execute(
+                sql.SQL("REVOKE ALL PRIVILEGES ON DATABASE {} FROM PUBLIC;").format(
+                    sql.Identifier(DB_NAME))
+            )
+            cur.execute(
+                sql.SQL("GRANT CONNECT, CREATE ON DATABASE {} TO {};").format(
+                    sql.Identifier(DB_NAME),
+                    sql.Identifier(DB_NEW_USER)
+                )
+            )
+            logger.info(f"Database {DB_NAME} created.")
+        else:
+            logger.info(f"Database {DB_NAME} already exists.")
+
+        cur.close()
+        conn.close()
+
+    except Exception as e:
+        logger.error(f"Error creating database: {e}")
 
 
-def create_table():
+def create_tables():
     """
-    Creates the table 'users' if it does not exist.
-    It logs the result of the operation.
+    Creates the tables defined in the SQLAlchemy models.
     """
-    try:
-        # Create the new database user
-        db = SessionLocal()
-        db.execute(CREATE_USERS_TABLE_QUERY)
-        db.commit()
-        db.close()
-        logger.info("Users table created successfully)")
-    except SQLAlchemyError:
-        logger.error("Error creating table 'users'")
-        raise InitDatabaseError("Error creating database user")
+    DATABASE_URL = sa.URL.create(
+        drivername="postgresql",
+        username=DB_NEW_USER,
+        password=DB_NEW_USER_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT,
+        database=DB_NAME
+    )
+    engine = create_engine(DATABASE_URL, echo=False)
+    Base.metadata.create_all(bind=engine)
+    logger.info(f'Created tables: {list(Base.metadata.tables.keys())}')

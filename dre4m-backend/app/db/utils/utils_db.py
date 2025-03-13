@@ -49,9 +49,9 @@ def create_db_user():
     cur.execute(
         "SELECT 1 FROM pg_roles WHERE rolname = %s;", (DB_NEW_USER,)
     )
-
     exists = cur.fetchone()
-    print(exists)
+
+    # Creates the user if it does not exist
     if not exists:
         cur.execute(
             sql.SQL(

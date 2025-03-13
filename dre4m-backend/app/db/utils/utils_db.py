@@ -1,6 +1,8 @@
 # Imports
 import os
 import psycopg2
+import sqlalchemy as sa
+import psycopg2.sql as sql
 
 # From imports
 from sqlalchemy import create_engine
@@ -11,9 +13,6 @@ from app.db.models.users_models import Base
 
 """
 This module contains utility functions for creating the database and tables.
-
-Important: If changing the way to get the data from environment variables,
-parametrize the queries in the functions to avoid SQL injection attacks.
 """
 
 # Remove after developing the app
@@ -33,6 +32,47 @@ if not all([DEFAULT_DB_USER, DB_NEW_USER,
     raise MissingEnvironmentVariableError("Missing environment variables")
 
 
+def create_db_user():
+    """
+    Creates a database user if it does not exist.
+    """
+    conn = psycopg2.connect(
+        dbname='postgres',
+        user=DEFAULT_DB_USER,
+        host=DB_HOST,
+        port=DB_PORT
+    )
+    conn.autocommit = True
+    cur = conn.cursor()
+
+    # Check if the user already exists
+    cur.execute(
+        sql.SQL(
+            "SELECT 1 FROM pg_roles WHERE rolname='{}';").format(
+            sql.Identifier(DB_NEW_USER)
+        )
+    )
+
+    exists = cur.fetchone()
+
+    if not exists:
+        cur.execute(
+            sql.SQL(
+                "CREATE USER {} WITH ENCRYPTED "
+                "PASSWORD '{}' "
+                "CREATEDB CREATEROLE REPLICATION BYPASSRLS LOGIN;").format(
+                sql.Identifier(DB_NEW_USER),
+                sql.Identifier(DB_NEW_USER_PASSWORD)
+            )
+        )
+        logger.info(f"User {DB_NEW_USER} created.")
+    else:
+        logger.info(f"User {DB_NEW_USER} already exists.")
+
+    cur.close()
+    conn.close()
+
+
 def create_db():
     """
     Creates the database if it does not exist.
@@ -40,7 +80,8 @@ def create_db():
     try:
         conn = psycopg2.connect(
             dbname="postgres",
-            user=DEFAULT_DB_USER,
+            user=DB_NEW_USER,
+            password=DB_NEW_USER_PASSWORD,
             host=DB_HOST,
             port=DB_PORT
         )
@@ -55,7 +96,20 @@ def create_db():
 
         if not exists:
             cur.execute(
-                f"CREATE DATABASE {DB_NAME};"
+                sql.SQL("CREATE DATABASE {} OWNER {}").format(
+                    sql.Identifier(DB_NAME),
+                    sql.Identifier(DB_NEW_USER)
+                )
+            )
+            cur.execute(
+                sql.SQL("REVOKE ALL PRIVILEGES ON DATABASE {} FROM PUBLIC;").format(
+                    sql.Identifier(DB_NAME))
+            )
+            cur.execute(
+                sql.SQL("GRANT CONNECT, TEMPORARY ON DATABASE {} TO {};").format(
+                    sql.Identifier(DB_NAME),
+                    sql.Identifier(DB_NEW_USER)
+                )
             )
             logger.info(f"Database {DB_NAME} created.")
         else:
@@ -68,47 +122,20 @@ def create_db():
         logger.error(f"Error creating database: {e}")
 
 
-def create_db_user():
-    """
-    Creates a database user if it does not exist.
-    Ensure that create database function is called before this function.
-    """
-    conn = psycopg2.connect(
-        dbname=DB_NAME,
-        user=DEFAULT_DB_USER,
-        host=DB_HOST,
-        port=DB_PORT
-    )
-    conn.autocommit = True
-    cur = conn.cursor()
-
-    # Check if the user already exists
-    cur.execute(
-        f"SELECT 1 FROM pg_roles WHERE rolname='{DB_NEW_USER}';"
-    )
-    exists = cur.fetchone()
-
-    if not exists:
-        cur.execute(
-            f"CREATE USER {DB_NEW_USER} WITH "
-            f"PASSWORD '{DB_NEW_USER_PASSWORD}' "
-            f"CREATEDB CREATEROLE REPLICATION BYPASSRLS LOGIN;"
-        )
-        logger.info(f"User {DB_NEW_USER} created.")
-    else:
-        logger.info(f"User {DB_NEW_USER} already exists.")
-
-    cur.close()
-    conn.close()
-
-
 def create_tables():
     """
     Creates the tables defined in the SQLAlchemy models.
     """
-    DATABASE_URL = (
-        f"postgresql://{DEFAULT_DB_USER}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+    DATABASE_URL = sa.URL.create(
+        drivername="postgresql",
+        username=DB_NEW_USER,
+        password=DB_NEW_USER_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT,
+        database=DB_NAME
     )
+
     engine = create_engine(DATABASE_URL, echo=False)
     Base.metadata.create_all(bind=engine)
-    print(f'Created tables: {list(Base.metadata.tables.keys())}')
+    logger.info(f'Created tables: {list(Base.metadata.tables.keys())}')

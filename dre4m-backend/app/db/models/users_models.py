@@ -1,5 +1,4 @@
 # From imports
-
 # SQLAlchemy
 from sqlalchemy import (
     Column,
@@ -9,10 +8,12 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from ..connection import Base
+from app.db.connection import Base
+from .address_models import Address  # Import the Address model
+
+# Table definition for users
 
 
-# Object definition for users
 class User(Base):
     # Table name in the database
     __tablename__ = 'users'
@@ -59,6 +60,17 @@ class Customer(User):
 
     # Columns in the table
     id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    name = Column(String)
+    lastname = Column(String)
+
+    # Relationships with Address
+    billing_address_id = Column(Integer, ForeignKey('addresses.id'))
+    billing_address = relationship("Address", foreign_keys=[
+                                   billing_address_id], back_populates="customer_billing")
+
+    shipping_address_id = Column(Integer, ForeignKey('addresses.id'))
+    shipping_address = relationship("Address", foreign_keys=[
+                                    shipping_address_id], back_populates="customer_shipping")
 
     # Link the Customer to the User
     user = relationship("User", back_populates="customer")
@@ -68,8 +80,10 @@ class Customer(User):
         'polymorphic_identity': 'customer',
     }
 
-    def __init__(self, email: str, password: str):
+    def __init__(self, email: str, password: str, name: str, lastname: str):
         super().__init__(email, password)
+        self.name = name
+        self.lastname = lastname
 
 
 # Add reverse relationships in the parent class if needed

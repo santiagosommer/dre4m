@@ -80,10 +80,16 @@ class Customer(User):
         'polymorphic_identity': 'customer',
     }
 
-    def __init__(self, email: str, password: str, name: str, lastname: str):
+    def __init__(self,
+                 email: str, password: str,
+                 name: str, lastname: str,
+                 billing_address: Address, shipping_address: Address
+                 ):
         super().__init__(email, password)
         self.name = name
         self.lastname = lastname
+        self.billing_address = billing_address
+        self.shipping_address = shipping_address
 
 
 # Add reverse relationships in the parent class if needed

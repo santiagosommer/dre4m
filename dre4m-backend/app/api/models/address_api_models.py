@@ -1,6 +1,10 @@
-class Address():
+# From imports
+from pydantic import BaseModel
+
+
+class Address(BaseModel):
     street_address: str
-    extra_address: str
+    address_info: str
     city: str
     state_or_province: str
     zip_code: str

@@ -8,8 +8,10 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
+from typing import List, Optional
 from app.db.connection import Base
-from .address_models import Address  # Import the Address model
+from app.db.models.address_models import Address
+from app.db.models.order_models import Order
 
 # Table definition for users
 
@@ -39,7 +41,6 @@ class Admin(User):
 
     # Columns in the table
     id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-    role = Column(String)
 
     # Link the Admin to the User
     user = relationship("User", back_populates="admin")
@@ -51,7 +52,6 @@ class Admin(User):
 
     def __init__(self, email: str, password: str, role: str):
         super().__init__(email, password)
-        self.role = role
 
 
 class Customer(User):
@@ -64,13 +64,26 @@ class Customer(User):
     lastname = Column(String)
 
     # Relationships with Address
-    billing_address_id = Column(Integer, ForeignKey('addresses.id'))
-    billing_address = relationship("Address", foreign_keys=[
-                                   billing_address_id], back_populates="customer_billing")
+    billing_address_id = Column(
+        Integer, ForeignKey('addresses.id'), nullable=True
+    )
+    shipping_address_id = Column(
+        Integer, ForeignKey('addresses.id'), nullable=True
+    )
 
-    shipping_address_id = Column(Integer, ForeignKey('addresses.id'))
-    shipping_address = relationship("Address", foreign_keys=[
-                                    shipping_address_id], back_populates="customer_shipping")
+    billing_address = relationship(
+        "Address",
+        foreign_keys=[billing_address_id],
+        back_populates="customer_billing"
+    )
+    shipping_address = relationship(
+        "Address",
+        foreign_keys=[shipping_address_id],
+        back_populates="customer_shipping"
+    )
+
+    # Relationships with Orders
+    orders = relationship("Order", back_populates="customer")
 
     # Link the Customer to the User
     user = relationship("User", back_populates="customer")
@@ -83,13 +96,16 @@ class Customer(User):
     def __init__(self,
                  email: str, password: str,
                  name: str, lastname: str,
-                 billing_address: Address, shipping_address: Address
+                 billing_address: Optional[Address] = None,
+                 shipping_address: Optional[Address] = None,
+                 orders: List[Order] = []
                  ):
         super().__init__(email, password)
         self.name = name
         self.lastname = lastname
         self.billing_address = billing_address
         self.shipping_address = shipping_address
+        self.orders = orders or []
 
 
 # Add reverse relationships in the parent class if needed

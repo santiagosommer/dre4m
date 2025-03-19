@@ -1,6 +1,6 @@
 # From imports
 from pydantic import BaseModel, EmailStr
-from typing import List
+from typing import List, Optional
 from app.api.models.address_api_models import Address
 from app.api.models.order_api_models import Order
 
@@ -18,6 +18,6 @@ class Admin(User):
 class Customer(User):
     name: str
     lastname: str
-    billing_address: Address
-    shipping_address: Address
-    orders: List[Order]
+    billing_address: Optional[Address]
+    shipping_address: Optional[Address]
+    orders: List[Order] = []

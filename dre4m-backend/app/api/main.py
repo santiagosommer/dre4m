@@ -1,8 +1,8 @@
 # From imports
 from fastapi import FastAPI
-from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from .models.users_api_models import User
+from dotenv import load_dotenv
+from app.api.models.users_api_models import User
 
 # Loads environment variables from .env file
 load_dotenv()

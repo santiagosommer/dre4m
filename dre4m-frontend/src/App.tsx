@@ -1,8 +1,8 @@
-import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import Navbar from './components/Navbar'
+import Layout from './components/Layout'
 import Auth from './pages/Auth'
+import { ProductCreation } from './pages/ProductCreation'
 
 function App() {
 
@@ -10,13 +10,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
+          <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/product-creation" element={<ProductCreation />} />
           </Route>
         </Routes>
       </BrowserRouter>
-      
+
     </>
   )
 }

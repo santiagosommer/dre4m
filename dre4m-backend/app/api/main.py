@@ -1,8 +1,13 @@
 # From imports
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+
+# Local imports
 from app.api.models.users_api_models import User
+from app.api.models.address_api_models import Address
+from app.api.models.product_api_models import Product
+from app.services.user_service import create_user
 
 # Loads environment variables from .env file
 load_dotenv()
@@ -29,7 +34,21 @@ def read_root():
     return {"Hello": "World"}
 
 
+@app.post("/addresses/")
+def add_user_address(address: Address):
+    print(f"Received address: {address}")
+
+
 @app.post("/users/")
-def create_user(user: User):
+def create_user_endpoint(user: User):
     print(user.email, user.password)
+    try:
+        create_user(user.email, user.password)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
     return {"user": user}
+
+
+@app.post("/products/")
+def create_product_endpoint(product: Product):
+    print(product)

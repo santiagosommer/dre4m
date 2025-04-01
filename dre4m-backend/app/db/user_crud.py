@@ -1,7 +1,9 @@
 # From imports
 from typing import List
-from .models.users_models import User
-from ..logging_config import logger
+
+# Local imports
+from app.db.models.user_models import User
+from app.logging_config import logger
 
 # SQLAlchemy imports
 from sqlalchemy import select

@@ -1,7 +1,18 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Table
+# From imports
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Float,
+    ForeignKey,
+    DateTime,
+    Table
+)
 from sqlalchemy.orm import relationship
-from app.db.connection import Base
 from datetime import datetime, timezone
+
+# Local imports
+from app.db.connection import Base
 
 
 class Order(Base):

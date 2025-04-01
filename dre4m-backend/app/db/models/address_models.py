@@ -6,6 +6,8 @@ from sqlalchemy import (
     String
 )
 from sqlalchemy.orm import relationship
+
+# Local imports
 from app.db.connection import Base
 
 

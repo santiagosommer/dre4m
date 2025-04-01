@@ -1,5 +1,13 @@
-from sqlalchemy import Column, Integer, String, Float
+# From imports
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Float
+)
 from sqlalchemy.orm import relationship
+
+# Local imports
 from app.db.connection import Base
 
 

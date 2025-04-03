@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import './Layout.css'
-import Marquee from "../Marquee";
+import Marquee from "../Marquee/Marquee";
 
 function Layout() {
     return (

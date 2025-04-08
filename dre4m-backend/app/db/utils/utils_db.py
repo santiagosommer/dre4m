@@ -135,7 +135,6 @@ def create_db():
     cur.close()
     conn.close()
 
-
 def create_db():
     """
     Creates the database if it does not exist.

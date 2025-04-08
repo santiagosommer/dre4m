@@ -1,9 +1,9 @@
-# From imports
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from app.api.models.users_api_models import User
 
 # Local imports
 from app.api.models.users_api_models import User
@@ -45,11 +45,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
 
 @app.get("/product")
 def list_products():

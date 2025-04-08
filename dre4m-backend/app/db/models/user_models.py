@@ -9,6 +9,8 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from typing import List, Optional
+
+# Local imports
 from app.db.connection import Base
 from app.db.models.address_models import Address
 from app.db.models.order_models import Order

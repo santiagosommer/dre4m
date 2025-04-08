@@ -1,13 +1,15 @@
 # From imports
-from app.db.connection import SessionLocal
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import NoResultFound
+
+# Local imports
+from app.db.connection import SessionLocal
 from app.db.user_crud import (
     crud_create_user,
     crud_get_user,
     crud_delete_user
 )
-from app.db.models.users_models import User
+from app.db.models.user_models import User
 
 
 def create_user(email: str, password: str) -> User:

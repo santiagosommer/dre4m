@@ -10,9 +10,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
-from app.db.models.users_models import Base, User
-from app.exceptions import MissingEnvironmentVariableError
 from dotenv import load_dotenv
+
+# Local imports
+from app.db.models.user_models import Base, User
+from app.exceptions import MissingEnvironmentVariableError
 
 load_dotenv()
 
@@ -108,3 +110,80 @@ def test_users():
     user3: User = User(email="test3@mail.com", password="test3")
     print("Test users created.")
     return user1, user2, user3
+
+
+# def create_things():
+#     engine = create_engine(DATABASE_URL, echo=True)
+
+#     # Crear una sesión
+#     with Session(engine) as session:
+#         try:
+
+#             # Crear direcciones de envío y facturación
+#             billing_address = Address(
+#                 street_address="123 Billing St",
+#                 address_info="Suite 1",
+#                 city="New York",
+#                 state_or_province="NY",
+#                 zip_code="10001",
+#                 country="USA",
+#                 phone_number="1234567890"
+#             )
+
+#             shipping_address = Address(
+#                 street_address="456 Shipping Ave",
+#                 address_info="Apt 2B",
+#                 city="Los Angeles",
+#                 state_or_province="CA",
+#                 zip_code="90001",
+#                 country="USA",
+#                 phone_number="0987654321"
+#             )
+
+#             # Crear productos
+#             product1 = Product(
+#                 name="Product A",
+#                 description="Description for Product A",
+#                 price=10.0,
+#                 stock=100,
+#                 product_img="product_a.jpg"
+#             )
+
+#             product2 = Product(
+#                 name="Product B",
+#                 description="Description for Product B",
+#                 price=20.0,
+#                 stock=50,
+#                 product_img="product_b.jpg"
+#             )
+
+#             # Crear una orden asociada al usuario y a la dirección de envío
+#             order = Order(
+#                 address=shipping_address,
+#                 payment_method="Credit Card",
+#                 total=30.0,
+#                 order_date=datetime.now(timezone.utc),
+#                 products=[product1, product2]  # Asociar productos a la orden
+#             )
+
+#             # Crear un usuario
+#             user = Customer(
+#                 email="customer@example.com",
+#                 password="securepassword",
+#                 name="John",
+#                 lastname="Doe",
+#                 billing_address=billing_address,
+#                 shipping_address=shipping_address,
+#                 orders=[order]
+#             )
+
+#             # Agregar todo a la sesión
+#             session.add(user)
+
+#             # Confirmar los cambios
+#             session.commit()
+#             print("Usuario, direcciones, orden y productos creados exitosamente.")
+
+#         except Exception as e:
+#             session.rollback()
+#             print(f"Error al crear los datos: {e}")

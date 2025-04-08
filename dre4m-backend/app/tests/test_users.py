@@ -7,7 +7,7 @@ from app.db.user_crud import (
     crud_get_user,
     crud_delete_user
 )
-from app.db.models.users_models import User
+from app.db.models.user_models import User
 from sqlalchemy.orm import Session
 
 from sqlalchemy.exc import (

@@ -1,0 +1,69 @@
+.footer-container {
+    bottom: 0px;
+    top: 0;
+    width: 100;
+    position: relative;
+    color: white;
+    background-color: black;
+    padding: 4rem;
+}
+
+.footer-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.footer-header form {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-header button {
+    align-self: center;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.footer-copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.footer-info-project {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.instagram-icon {
+    font-size: 2rem;
+    color: rgb(179, 179, 179);
+    transition: color 0.2s ease;
+}
+
+.instagram-icon:hover {
+    color: white;
+}
+
+.email-link {
+    text-decoration: none;
+    color: rgb(179, 179, 179);
+    transition: color 0.2s ease;
+}
+
+.email-link:hover {
+    color: white;
+}

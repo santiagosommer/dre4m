@@ -34,6 +34,31 @@ def read_root():
     return {"Hello": "World"}
 
 
+@app.get("/product")
+def list_products():
+    returning_products = [
+        {
+            "id": "1",
+            "name": "ART 001 TSHIRT",
+            "price": "999",
+            "img": "idk"
+        },
+        {
+            "id": "2",
+            "name": "ART 002 TSHIRT",
+            "price": "999",
+            "img": "idk"
+        },
+        {
+            "id": "3",
+            "name": "ART 003 TSHIRT",
+            "price": "999",
+            "img": "idk"
+        }
+    ]
+    return returning_products
+
+
 @app.post("/addresses/")
 def add_user_address(address: Address):
     print(f"Received address: {address}")

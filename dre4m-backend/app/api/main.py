@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from app.api.models.users_api_models import User
 from app.api.models.address_api_models import Address
 from app.api.models.product_api_models import Product
+from app.api.models.order_api_models import Order
 from app.services.user_service import create_user
 
 # Loads environment variables from .env file
@@ -77,3 +78,8 @@ def create_user_endpoint(user: User):
 @app.post("/products/")
 def create_product_endpoint(product: Product):
     print(product)
+
+
+@app.post("/orders/")
+def create_order_endpoint(order: Order):
+    print(order)

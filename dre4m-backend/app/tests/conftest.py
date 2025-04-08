@@ -113,7 +113,6 @@ def test_users():
 
 
 # def create_things():
-#     # Crear el motor de SQLAlchemy
 #     engine = create_engine(DATABASE_URL, echo=True)
 
 #     # Crear una sesión

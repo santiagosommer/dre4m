@@ -15,7 +15,7 @@
 
 .marquee-text {
     overflow: clip;
-    /* Not strictly necessary, overflow-x hidden in body */
+    /* Not strictly necessary, overflow-x clip in body */
 }
 
 .marquee-text-track {

@@ -102,7 +102,7 @@
 }
 
 .overlay-text {
-    color: rgb(227, 150, 6);
+    color: rgb(255, 255, 255);
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
@@ -110,7 +110,7 @@
 }
 
 .second-overlay-text {
-    color: rgb(181, 114, 252);
+    color: rgb(255, 255, 255);
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
@@ -118,7 +118,7 @@
 }
 
 .third-overlay-text {
-    color: rgb(226, 50, 50);
+    color: rgb(255, 255, 255);
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;

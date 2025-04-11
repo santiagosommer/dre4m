@@ -1,6 +1,7 @@
 import background from '../assets/waved_background.jpg'
 import './Store.css'
-import shirt from '../assets/goya-back-shirt.png'
+import ProductCard from '../components/ProductCard/ProductCard'
+
 
 export const Store = () => {
     return (
@@ -14,23 +15,10 @@ export const Store = () => {
                 </div>
                 <div className='container-products'>
                     <div className='container-products-cards'>
-                        <div className='container-products-card'>
-                            <img src={shirt} />
-                        </div>
-                        <div className='container-products-card'>
-                            <img src={shirt} />
-                        </div>
-                        <div className='container-products-card'>
-                            <img src={shirt} />
-                        </div><div className='container-products-card'>
-                            <img src={shirt} />
-                        </div>
-                        <div className='container-products-card'>
-                            <img src={shirt} />
-                        </div>
-                        <div className='container-products-card'>
-                            <img src={shirt} />
-                        </div>
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
                     </div>
                 </div>
             </section>

@@ -15,10 +15,10 @@ export const Store = () => {
                 </div>
                 <div className='container-products'>
                     <div className='container-products-cards'>
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
+                        <ProductCard name='ART 001' price={1800.00} />
+                        <ProductCard name='ART 002' price={1800.00} />
+                        <ProductCard name='ART 003' price={1800.00} />
+                        <ProductCard name='ART 004' price={1800.00} />
                     </div>
                 </div>
             </section>

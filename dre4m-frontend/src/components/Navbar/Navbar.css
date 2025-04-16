@@ -12,10 +12,35 @@
     color: black;
 }
 
+.navbar a {
+    text-decoration: none;
+    color: black;
+    user-select: none;
+}
+
+.navbar ul li a {
+    font-weight: 600;
+}
+
+.navbar li {
+    font-weight: 500;
+}
+
 .navbar__logo {
     font-size: larger;
     margin-left: 2rem;
+    user-select: none;
 }
+
+.navbar__log__ref {
+    transition: ease 0.3s;
+}
+
+.navbar__log__ref:hover {
+    color: red;
+}
+
+
 
 .navbar__list {
     display: flex;
@@ -24,4 +49,61 @@
     list-style-type: none;
     gap: 1rem;
     margin-right: 2rem;
+}
+
+/* Dropdown Button */
+.droplnk {
+    color: white;
+    font-size: 16px;
+    border: none;
+    z-index: 999;
+    padding-bottom: 1.5rem;
+    padding-right: 0.3rem;
+    white-space: nowrap;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    background-color: white;
+
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 1.5px 1.5px 0;
+    display: inline-block;
+    padding: 2px;
+    margin-left: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }

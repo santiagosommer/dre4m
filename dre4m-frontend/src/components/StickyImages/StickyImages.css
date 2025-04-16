@@ -43,8 +43,9 @@
 .image-wrapper2,
 .image-wrapper3 {
     position: sticky;
-    top: -8rem;
+    top: -10%;
     width: 100%;
+    overflow: hidden;
 }
 
 .flex-image {
@@ -63,6 +64,7 @@
 .sticky-image1 {
     width: 100%;
     display: block;
+    margin-top: -5rem;
 }
 
 .sticky-image2 {
@@ -73,4 +75,59 @@
 .sticky-image3 {
     width: 100%;
     display: block;
+}
+
+.overlay {
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.second-overlay {
+    position: absolute;
+    top: 75%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.third-overlay {
+    position: absolute;
+    top: 89%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay-text {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin: 0;
+}
+
+.second-overlay-text {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin: 0;
+}
+
+.third-overlay-text {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin: 0;
+}
+
+.overlay-button {
+    background-color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-weight: bolder;
 }

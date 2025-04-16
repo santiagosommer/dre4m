@@ -5,22 +5,39 @@ export const Navbar = () => {
   return (
     <>
       <nav className="navbar">
-        <h1 className="navbar__logo">DRE4M</h1>
+        <h1 className="navbar__logo">
+          <Link className="navbar__log__ref" to="/">DRE4M</Link>
+        </h1>
         <ul className="navbar__list">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
           <li>
             <Link to="/store">Tienda</Link>
           </li>
           <li>
-            <Link to="/auth">Create User</Link>
+            <div className="dropdown">
+              <div className="droplnk">
+                <Link to="/collections">
+                  Collections
+                  <i className="arrow down"></i>
+                </Link>
+              </div>
+              <div className="dropdown-content">
+                <a href="#">ART</a>
+                <a href="#">BRUTALISM</a>
+                <a href="#">ASIA</a>
+              </div>
+            </div>
           </li>
           <li>
-            <Link to="/product-creation">Create Product</Link>
+            <Link to="/faq">FAQ</Link>
           </li>
           <li>
-            <Link to="/address-creation">Create address</Link>
+            <Link to="/my-account">Mi cuenta</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/cart">Cart</Link>
           </li>
         </ul>
       </nav>

@@ -5,6 +5,7 @@ import Auth from './pages/Auth'
 import { ProductCreation } from './pages/ProductCreation'
 import { AddressCreation } from './pages/AddressCreation'
 import { Footer } from './components/Footer/Footer'
+import Store from './pages/Store'
 import "./App.css"
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path='/store' element={<Store />}></Route>
             <Route path="/auth" element={<Auth />} />
             <Route path="/product-creation" element={<ProductCreation />} />
+            <Route path="/login" element={<Auth />} />
             <Route path="/address-creation" element={<AddressCreation />} />
             <Route path="/footer" element={<Footer />} />
           </Route>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import './StickyImages.css'
 import dre4m from '../../assets/dre4m-back-shirt.png'
@@ -48,17 +49,23 @@ export const StickyImages = () => {
 
     return (
         <>
-            <div className="sticky-container">
+            <div className='sticky-container'>
                 <div className='image-wrapper1'>
+                    <div className='overlay'>
+                        <p className='overlay-text'>ELEVATE</p>
+                        <Link to="/">
+                            <button className='overlay-button'>DISCOVER</button>
+                        </Link>
+                    </div>
                     <img className='sticky-image1' src={goya} />
                 </div>
                 <div className='section-wrapper'>
                     <p className='section-name'>LAST RELEASE</p>
                     <div className='image-section-wrapper'>
                         {products.map((product) => (
-                            < div key={product.id} className="product-card" >
+                            < div key={product.id} className='product-card' >
                                 {/* <img className="flex-image" src={product.image} alt={product.name} /> */}
-                                <img className="flex-image" src={goya} alt={product.name} />
+                                <img className='flex-image' src={goya} alt={product.name} />
                                 <h3>{product.name}</h3>
                                 <p>${product.price}</p>
                             </div>
@@ -66,9 +73,21 @@ export const StickyImages = () => {
                     </div>
                 </div>
                 <div className='image-wrapper2'>
+                    <div className='second-overlay'>
+                        <p className='second-overlay-text'>YOURSELF</p>
+                        <Link to="/">
+                            <button className='overlay-button'>DISCOVER</button>
+                        </Link>
+                    </div>
                     <img className='sticky-image2' src={dre4m} />
                 </div>
                 <div className='image-wrapper3'>
+                    <div className='third-overlay'>
+                        <p className='third-overlay-text'>DEFY</p>
+                        <Link to="/">
+                            <button className='overlay-button'>DISCOVER</button>
+                        </Link>
+                    </div>
                     <img className='sticky-image3' src={koi} />
                 </div>
             </div >

@@ -1,0 +1,16 @@
+.cards-container {
+    box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+}
+
+.cards-container img {
+    max-width: 100%;
+
+}
+
+.cards-container h3 {
+    margin: 0;
+}
+
+.card-text {
+    padding: 0 0.5rem 0 0.5rem;
+}

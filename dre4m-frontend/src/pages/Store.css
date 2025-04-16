@@ -1,0 +1,47 @@
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.container-background {
+    position: sticky;
+    width: 100%;
+    top: 4rem;
+    z-index: 1;
+}
+
+.container-background img {
+    width: 100%;
+}
+
+.container-title {
+    display: flex;
+    justify-content: center;
+}
+
+.container-title p {
+    color: white;
+    font-weight: bolder;
+    font-size: 5em;
+    z-index: 2;
+}
+
+.container-products {
+    background-color: white;
+    position: sticky;
+    top: 4rem;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-products-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 3rem;
+    max-width: 100%;
+}

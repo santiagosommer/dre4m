@@ -14,12 +14,12 @@ export const Navbar = () => {
           </li>
           <li>
             <div className="dropdown">
-              <a className="droplnk">
+              <div className="droplnk">
                 <Link to="/collections">
                   Collections
                   <i className="arrow down"></i>
                 </Link>
-              </a>
+              </div>
               <div className="dropdown-content">
                 <a href="#">ART</a>
                 <a href="#">BRUTALISM</a>
@@ -32,6 +32,9 @@ export const Navbar = () => {
           </li>
           <li>
             <Link to="/my-account">Mi cuenta</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
           </li>
           <li>
             <Link to="/cart">Cart</Link>

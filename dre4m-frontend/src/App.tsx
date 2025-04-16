@@ -18,6 +18,7 @@ function App() {
             <Route path='/store' element={<Store />}></Route>
             <Route path="/auth" element={<Auth />} />
             <Route path="/product-creation" element={<ProductCreation />} />
+            <Route path="/login" element={<Auth />} />
             <Route path="/address-creation" element={<AddressCreation />} />
             <Route path="/footer" element={<Footer />} />
           </Route>

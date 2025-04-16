@@ -57,8 +57,9 @@
     font-size: 16px;
     border: none;
     z-index: 999;
-    padding-bottom: 1.8rem;
+    padding-bottom: 1.5rem;
     padding-right: 0.3rem;
+    white-space: nowrap;
 }
 
 .dropdown {
@@ -73,7 +74,7 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     background-color: white;
-    margin-top: 1.5rem;
+
 }
 
 .dropdown-content a {

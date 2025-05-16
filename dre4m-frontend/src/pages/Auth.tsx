@@ -1,12 +1,9 @@
-import { LoginForm } from "../components/Forms/LoginForm"
-import { CreateUserForm } from "../components/Forms/CreateUserForm"
+import { Outlet } from "react-router-dom"
 
 export const Auth = () => {
   return (
     <>
-      <h1>Login or Create User</h1>
-      <LoginForm />
-      <CreateUserForm />
+      <Outlet />
     </>
   )
 }

@@ -1,0 +1,79 @@
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.tabs-wrapper {
+    margin: 5rem;
+    display: flex;
+}
+
+.block-tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    gap: 1rem;
+}
+
+.block-tabs button {
+    min-width: 15rem;
+    color: rgb(184, 184, 184);
+    background-color: grey;
+    transition: background-color 0.5s ease, color 0.5s;
+    padding: 0.5rem;
+}
+
+.block-tabs button:hover {
+    color: white;
+    background-color: rgb(44, 44, 44);
+}
+
+.block-tabs h1 {
+    margin: 1rem;
+    justify-content: center;
+}
+
+.tabs {
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    border: none;
+}
+
+.active-tabs {
+    /* Change button theme */
+}
+
+
+.content-tabs {
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.079);
+    max-width: 20rem;
+    white-space: normal;
+}
+
+
+
+.inactive {
+    display: none;
+}
+
+.active-content {
+    display: block;
+    margin: 1rem;
+}
+
+.block-title {
+    color: white
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

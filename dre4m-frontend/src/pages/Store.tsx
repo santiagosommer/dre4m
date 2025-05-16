@@ -1,5 +1,5 @@
 import './Store.css'
-import background from '../assets/waved_background.jpg'
+import background from '../assets/shop_background.png'
 import ProductCard from '../components/ProductCard/ProductCard'
 
 

@@ -21,7 +21,7 @@ export const StickyImages = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/product');
+            const response = await fetch('https://localhost:8000/products/list');
             if (!response.ok) {
                 throw new Error('Error al recuperar los datos');
             }
@@ -40,7 +40,7 @@ export const StickyImages = () => {
     }, []);
 
     if (loading) {
-        return <p>Cargando productos...</p>;
+        return <p>Cargando...</p>;
     }
 
     if (error) {

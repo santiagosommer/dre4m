@@ -26,23 +26,23 @@
     font-weight: 500;
 }
 
-.navbar__logo {
+.navbar-logo {
     font-size: larger;
     margin-left: 2rem;
     user-select: none;
 }
 
-.navbar__log__ref {
+.navbar-log-ref {
     transition: ease 0.3s;
 }
 
-.navbar__log__ref:hover {
+.navbar-log-ref:hover {
     color: red;
 }
 
 
 
-.navbar__list {
+.navbar-list {
     display: flex;
     justify-content: flex-end;
     flex-direction: row;

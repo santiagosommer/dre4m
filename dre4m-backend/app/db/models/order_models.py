@@ -12,7 +12,8 @@ from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 
 # Local imports
-from app.db.connection import Base
+from ...db.connection import Base
+from .product_models import Product  # Order mapper needs this import
 
 
 class Order(Base):

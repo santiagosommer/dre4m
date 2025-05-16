@@ -8,17 +8,16 @@ from app.api.models.order_api_models import Order
 
 
 # Object definition for users
-class User(BaseModel):
+class ApiUser(BaseModel):
     email: EmailStr
-    # put _password, private convention
     password: str
 
 
-class Admin(User):
+class Admin(ApiUser):
     pass
 
 
-class Customer(User):
+class Customer(ApiUser):
     name: str
     lastname: str
     billing_address: Optional[Address]

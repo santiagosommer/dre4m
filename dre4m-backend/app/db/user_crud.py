@@ -11,7 +11,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import (
     MultipleResultsFound,
     SQLAlchemyError,
-    IntegrityError,
     NoResultFound
 )
 
@@ -27,11 +26,6 @@ def crud_create_user(db: Session, email: str, password: str) -> User | None:
     :raises SQLAlchemyError: If there was an error creating the user.
     """
     try:
-        if crud_get_user(db, email):
-            raise IntegrityError("User with this email already exists.",
-                                 params={"email": email},
-                                 orig=Exception("IntegrityError"))
-
         db_user: User = User(email=email, password=password)
         db.add(db_user)
         db.commit()
@@ -40,10 +34,6 @@ def crud_create_user(db: Session, email: str, password: str) -> User | None:
 
         logger.info(f"User with email {email} created successfully.")
         return db_user
-    except IntegrityError:
-        db.rollback()
-        logger.error(f"User with email {email} already exists.")
-        raise
     except SQLAlchemyError:
         db.rollback()
         logger.error(f"Error creating user with email {email}.")

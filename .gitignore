@@ -9,6 +9,7 @@ node_modules
 
 # Python cache files and directories
 __pycache__/
+*.pyc
 
 # Python virtual environment files
 .env

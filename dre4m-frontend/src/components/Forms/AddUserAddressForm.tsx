@@ -1,4 +1,4 @@
-import { FormComponent } from './FormComponent'
+import { FormComponent } from './FormComponent/FormComponent'
 
 interface AddAddressData {
     street_address: String
@@ -12,7 +12,7 @@ interface AddAddressData {
 
 const onSubmit = async (data: AddAddressData) => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/addresses/", {
+        const response = await fetch("https://localhost:8000/addresses/", {
             method: "POST",
             headers: {
                 Accept: "application/json",

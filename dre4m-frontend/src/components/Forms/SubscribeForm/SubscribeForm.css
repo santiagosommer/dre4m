@@ -1,0 +1,28 @@
+.subscribe-form {
+    display: flex;
+
+    align-items: center;
+}
+
+.subscribe-input {
+    padding: 1em 3em;
+    border-radius: 0.5em;
+    border: none;
+    outline: none;
+    position: relative;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.subscribe-button {
+    background-color: rgb(246, 246, 246);
+    font-weight: bolder;
+    border: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.subscribe-button:hover {
+    background-color: red;
+    color: white;
+}

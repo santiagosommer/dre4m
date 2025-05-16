@@ -1,4 +1,4 @@
-import { FormComponent } from './FormComponent'
+import { FormComponent } from './FormComponent/FormComponent'
 
 interface ProductData {
     name: String
@@ -10,7 +10,7 @@ interface ProductData {
 
 const onSubmit = async (data: ProductData) => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/products/", {
+        const response = await fetch("https://localhost:8000/products/", {
             method: "POST",
             headers: {
                 Accept: "application/json",

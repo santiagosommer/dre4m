@@ -1,19 +1,13 @@
-# Imports
-import os
-
 # From imports
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv
-
-# Remove after developing the app
-load_dotenv()
+from settings.settings import get_settings
 
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://user:password@localhost:5432/dre4mdb"
-)
+settings = get_settings()
+
+
+DATABASE_URL = settings.DATABASE_URL
 
 # Creates database engine with lazy initialization
 # SSOT: Engine only created once

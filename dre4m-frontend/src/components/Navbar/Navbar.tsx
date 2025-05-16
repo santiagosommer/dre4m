@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom"
-import './Navbar.css'
+import "./Navbar.css"
+import { useAuth } from "../../context/AuthContext"
 
 export const Navbar = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       <nav className="navbar">
-        <h1 className="navbar__logo">
-          <Link className="navbar__log__ref" to="/">DRE4M</Link>
+        <h1 className="navbar-logo">
+          <Link className="navbar-log-ref" to="/">DRE4M</Link>
         </h1>
-        <ul className="navbar__list">
+        <ul className="navbar-list">
           <li>
             <Link to="/store">Tienda</Link>
           </li>
@@ -31,10 +34,10 @@ export const Navbar = () => {
             <Link to="/faq">FAQ</Link>
           </li>
           <li>
-            <Link to="/my-account">Mi cuenta</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
+            {isAuthenticated
+              ? <Link to="/my-account">My Account</Link>
+              : <Link to="/auth/login">Login</Link>
+            }
           </li>
           <li>
             <Link to="/cart">Cart</Link>

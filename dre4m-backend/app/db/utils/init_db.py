@@ -1,5 +1,5 @@
 # From imports
-from app.db.utils.utils_db import (
+from .utils_db import (
     create_db_user,
     create_tables,
     create_db,

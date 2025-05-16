@@ -1,8 +1,6 @@
 .footer-container {
-    bottom: 0px;
-    top: 0;
-    width: 100;
     position: relative;
+    bottom: 0;
     color: white;
     background-color: black;
     padding: 4rem;
@@ -36,10 +34,11 @@
 }
 
 .footer-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
+    text-align: center;
 }
 
 .footer-info-project {
@@ -58,12 +57,32 @@
     color: white;
 }
 
-.email-link {
-    text-decoration: none;
-    color: rgb(179, 179, 179);
-    transition: color 0.2s ease;
-}
-
 .email-link:hover {
     color: white;
+}
+
+.email-link,
+.instagram-icon,
+.footer-info-about>a,
+.footer-info-buy>a,
+.footer-info-account>a {
+    transition: color 0.2s ease;
+    color: rgb(179, 179, 179);
+    text-decoration: none;
+
+}
+
+.email-link:hover,
+.instagram-icon:hover,
+.footer-info-about>a:hover,
+.footer-info-buy>a:hover,
+.footer-info-account:hover {
+    color: white;
+}
+
+.footer-info-about,
+.footer-info-buy,
+.footer-info-account {
+    display: flex;
+    flex-direction: column;
 }

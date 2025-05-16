@@ -14,10 +14,9 @@ body {
   width: 100%;
   overflow-x: clip;
   /* Unables side scrolling */
+  padding: 0;
   margin: 0px;
 }
-
-
 
 @media (prefers-color-scheme: light) {
   :root {

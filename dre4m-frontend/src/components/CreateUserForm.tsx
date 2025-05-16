@@ -7,7 +7,7 @@ interface CreateUserAuthData {
 
 const onSubmit = async (data: CreateUserAuthData) => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/users/", {
+        const response = await fetch("https://localhost:8000/users/", {
             method: "POST",
             headers: {
                 Accept: "application/json",

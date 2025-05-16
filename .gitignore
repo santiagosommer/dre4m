@@ -13,7 +13,12 @@ __pycache__/
 # Python virtual environment files
 .env
 .venv
+.env.production
 venv/
 
 # Vscode settings
 .vscode/
+
+# Certificates
+/dre4m-frontend/certs
+/dre4m-backend/certs

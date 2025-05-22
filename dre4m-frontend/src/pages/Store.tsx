@@ -1,9 +1,38 @@
 import './Store.css'
 import background from '../assets/shop_background.png'
 import ProductCard from '../components/ProductCard/ProductCard'
+import { useEffect, useState } from 'react'
 
 
 export const Store = () => {
+    const [products, setProducts] = useState([])
+
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch("https://localhost:8000/products/list", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            })
+            if (response.ok) {
+                const data = await response.json()
+                setProducts(data)
+                console.log(data)
+            }
+        }
+        catch (err) {
+
+        }
+    };
+
+    useEffect(() => {
+        fetchProducts()
+    }, [])
+
+
+
     return (
         <>
             <section className='container'>
@@ -15,10 +44,9 @@ export const Store = () => {
                 </div>
                 <div className='container-products'>
                     <div className='container-products-cards'>
-                        <ProductCard name='ART 001' price={1000.00} />
-                        <ProductCard name='ART 002' price={1000.00} />
-                        <ProductCard name='ART 003' price={1000.00} />
-                        <ProductCard name='ART 004' price={1000.00} />
+                        {products.map((product) => (
+                            <ProductCard name={product.name} price={product.price} />
+                        ))}
                     </div>
                 </div>
             </section>

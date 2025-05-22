@@ -62,3 +62,13 @@ async def get_cookie_token(request: Request):
             headers={"WWW-Authenticate": "Bearer"}
         )
     return token
+
+
+@router.post("/logout")
+async def logout(response: Response):
+    response = JSONResponse(content={"message": "Logged out"})
+    response.delete_cookie(
+        key="access_token",
+        path="/"
+    )
+    return response

@@ -19,8 +19,8 @@
 
 .block-tabs button {
     min-width: 15rem;
-    color: rgb(184, 184, 184);
-    background-color: grey;
+    color: white;
+    background-color: black;
     transition: background-color 0.5s ease, color 0.5s;
     padding: 0.5rem;
 }
@@ -76,4 +76,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.log-out-button {
+    border: none;
+    cursor: pointer;
 }

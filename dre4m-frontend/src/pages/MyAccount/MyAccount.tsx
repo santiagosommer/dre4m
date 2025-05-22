@@ -4,12 +4,29 @@ import { useNavigate } from "react-router-dom";
 import "./MyAccount.css"
 
 export const MyAccount = () => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, setIsAuthenticated } = useAuth();
     const navigate = useNavigate()
     const [toggleState, setToggleState] = useState(1);
 
     const toggleTab = (index: number) => {
         setToggleState(index)
+    }
+
+    const logOut = async () => {
+        try {
+            const response = await fetch("https://localhost:8000/auth/logout", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+            setIsAuthenticated(false)
+            navigate("/")
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     useEffect(() => {
@@ -25,15 +42,13 @@ export const MyAccount = () => {
     return (
         <div className="tabs-container">
             <div className="tabs-wrapper">
-
-
                 <nav className="block-tabs">
                     <h1 className="block-title">
                         My Account
                     </h1>
                     <div className="buttons-container">
                         <button onClick={() => toggleTab(1)} className={toggleState === 1 ? "tabs active-tabs" : "tabs"} >Orders</button>
-                        <button onClick={() => toggleTab(2)} className={toggleState === 2 ? "tabs active-tabs" : "tabs"} >Log out</button>
+                        <button onClick={() => logOut()} className="log-out-button" >Log out</button>
                     </div>
                 </nav>
                 <div className="content-tabs">

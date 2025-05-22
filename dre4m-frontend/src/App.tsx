@@ -11,31 +11,36 @@ import { MyAccount } from "./pages/MyAccount/MyAccount"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import AuthProvider from "./context/AuthContext"
+import CartProvider from "./context/CartContext"
 import ProtectedRoute from "./components/ProtectedRoute"
+import { Cart } from "./components/Cart"
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="store" element={<Store />} />
-            <Route path="auth" element={<Auth />}>
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<SignUp />} />
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="store" element={<Store />} />
+              <Route path="auth" element={<Auth />}>
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+              </Route>
+              <Route path="product-creation" element={<ProductCreation />} />
+              <Route path="address-creation" element={<AddressCreation />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="my-account" element={
+                <ProtectedRoute>
+                  <MyAccount />
+                </ProtectedRoute>
+              } />
             </Route>
-            <Route path="product-creation" element={<ProductCreation />} />
-            <Route path="address-creation" element={<AddressCreation />} />
-            <Route path="my-account" element={
-              <ProtectedRoute>
-                <MyAccount />
-              </ProtectedRoute>
-            } />
-          </Route>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   )
 }

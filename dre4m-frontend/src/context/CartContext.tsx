@@ -2,6 +2,7 @@
 import { createContext, useReducer, useContext, ReactNode } from "react";
 import { cartReducer } from "../reducers/CartReducer";
 import { Product, ADD_PRODUCT, REMOVE_PRODUCT, CartAction } from "../types";
+import SideCart from "../components/SideCart/SideCart";
 
 type CartContextType = {
     cart: Product[];
@@ -25,6 +26,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return (
         <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
             {children}
+            <SideCart />
         </CartContext.Provider>
     );
 };

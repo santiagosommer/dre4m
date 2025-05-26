@@ -1,37 +1,12 @@
 import './Store.css'
 import background from '../assets/shop_background.png'
 import ProductCard from '../components/ProductCard/ProductCard'
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useProducts } from "../context/ProductsContext"
 
 
 export const Store = () => {
-    const [products, setProducts] = useState([])
-
-    const fetchProducts = async () => {
-        try {
-            const response = await fetch("https://localhost:8000/products/list", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include"
-            })
-            if (response.ok) {
-                const data = await response.json()
-                setProducts(data)
-                console.log(data)
-            }
-        }
-        catch (err) {
-
-        }
-    };
-
-    useEffect(() => {
-        fetchProducts()
-    }, [])
-
-
+    const { products } = useProducts()
 
     return (
         <>
@@ -44,8 +19,14 @@ export const Store = () => {
                 </div>
                 <div className='container-products'>
                     <div className='container-products-cards'>
-                        {products.map((product) => (
-                            <ProductCard name={product.name} price={product.price} />
+                        {products.map((products) => (
+                            <Link
+                                key={products.id}
+                                to={`/product/${products.id}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                <ProductCard name={products.name} price={products.price} />
+                            </Link>
                         ))}
                     </div>
                 </div>

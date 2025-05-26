@@ -12,34 +12,39 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import AuthProvider from "./context/AuthContext"
 import CartProvider from "./context/CartContext"
+import ProductsProvider from "./context/ProductsContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { Cart } from "./components/Cart"
+import { ProductDetail } from "./pages/ProductDetail"
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="store" element={<Store />} />
-              <Route path="auth" element={<Auth />}>
-                <Route path="login" element={<Login />} />
-                <Route path="signup" element={<SignUp />} />
+        <ProductsProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="store" element={<Store />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="auth" element={<Auth />}>
+                  <Route path="login" element={<Login />} />
+                  <Route path="signup" element={<SignUp />} />
+                </Route>
+                <Route path="product-creation" element={<ProductCreation />} />
+                <Route path="address-creation" element={<AddressCreation />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="my-account" element={
+                  <ProtectedRoute>
+                    <MyAccount />
+                  </ProtectedRoute>
+                } />
               </Route>
-              <Route path="product-creation" element={<ProductCreation />} />
-              <Route path="address-creation" element={<AddressCreation />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="my-account" element={
-                <ProtectedRoute>
-                  <MyAccount />
-                </ProtectedRoute>
-              } />
-            </Route>
-          </Routes>
-          <Footer />
-        </BrowserRouter>
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </ProductsProvider>
       </CartProvider>
     </AuthProvider>
   )

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import "./Navbar.css"
 import { useAuth } from "../../context/AuthContext"
 
-export const Navbar = () => {
+export const Navbar = ({ onCartClick }) => {
   const { isAuthenticated } = useAuth();
 
   return (
@@ -23,11 +23,11 @@ export const Navbar = () => {
                   <i className="arrow down"></i>
                 </Link>
               </div>
-              <div className="dropdown-content">
+              <nav className="dropdown-content">
                 <a href="#">ART</a>
                 <a href="#">BRUTALISM</a>
                 <a href="#">ASIA</a>
-              </div>
+              </nav>
             </div>
           </li>
           <li>
@@ -40,7 +40,7 @@ export const Navbar = () => {
             }
           </li>
           <li>
-            <Link to="/cart">Cart</Link>
+            <button className="cart-btn" onClick={onCartClick}>Cart</button>
           </li>
         </ul>
       </nav>

@@ -26,7 +26,7 @@ export const ProductDetail = () => {
 
     return (
         <div className="detail-container">
-            <div className="detail-products-container">
+            <section className="detail-products-container">
                 <div className="gallery-wrapper">
                     <div className="viewer">
                         <img src={mainPhoto.src} alt={mainPhoto.alt} className="main-image" />
@@ -69,8 +69,8 @@ export const ProductDetail = () => {
                     </button>
                     <img src={SIZE_GUIDE} draggable="false" className="size-guide" />
                 </div>
-            </div >
-            <div className="grid-images">
+            </section >
+            <section className="recommended-products">
                 <Link
                     key={products["1"].id}
                     to={`/product/${products["1"].id}`}
@@ -85,7 +85,7 @@ export const ProductDetail = () => {
                 >
                     <ProductCard name={products["2"].name} price={products["2"].price} image={products["2"].img[0].url} />
                 </Link>
-            </div>
+            </section>
         </div>
     );
 };

@@ -15,7 +15,7 @@ import CartProvider from "./context/CartContext"
 import ProductsProvider from "./context/ProductsContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import { Cart } from "./components/Cart"
-import { ProductDetail } from "./pages/ProductDetail"
+import { ProductDetail } from "./pages/ProductDetail/ProductDetail"
 
 function App() {
   return (

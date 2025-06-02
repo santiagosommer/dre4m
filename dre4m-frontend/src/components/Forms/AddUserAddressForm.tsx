@@ -29,7 +29,6 @@ const onSubmit = async (data: AddAddressData) => {
             }),
         })
         const json = await response.json()
-        console.log(json)
     }
     catch (error) {
         console.error(error)

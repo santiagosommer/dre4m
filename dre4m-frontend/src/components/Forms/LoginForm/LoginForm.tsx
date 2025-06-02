@@ -33,7 +33,6 @@ export const LoginForm = () => {
 
             }
             const json = await response.json()
-            console.log(json)
             setIsAuthenticated(true)
             navigate("/")
         }

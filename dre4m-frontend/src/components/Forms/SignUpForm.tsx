@@ -34,7 +34,6 @@ export const CreateUserForm = () => {
             }
 
             const json = await response.json()
-            console.log(json)
             setErrorMessage(null)
             navigate("/")
         } catch (error) {

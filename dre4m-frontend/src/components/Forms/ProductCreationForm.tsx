@@ -25,7 +25,6 @@ const onSubmit = async (data: ProductData) => {
             }),
         })
         const json = await response.json()
-        console.log(json)
     }
     catch (error) {
         console.error(error)

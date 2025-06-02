@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
                 if (response.ok) {
                     const data = await response.json()
                     setIsAuthenticated(true);
-                    console.log(data)
                 } else {
                     throw new Error();
                 }

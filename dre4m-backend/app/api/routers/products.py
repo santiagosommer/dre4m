@@ -41,7 +41,7 @@ async def list_products():
                     "alt": "perspective-front"
                 },
                 {
-                    "url": "https://zkdwvxlhnamlrrtdgakp.supabase.co/storage/v1/object/sign/dre4m/shirts/art/goya/perspective-lying.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5XzlkNGU3MzllLTdkMjktNDE0ZS1hZmQwLTc2MDVhN2M0NmY4ZSJ9.eyJ1cmwiOiJkcmU0bS9zaGlydHMvYXJ0L2dveWEvcGVyc3BlY3RpdmUtbHlpbmcucG5nIiwiaWF0IjoxNzQ4NjI5MTEyLCJleHAiOjIwNjM5ODkxMTJ9.5-K_xT6JVFU4u5ULCV6ev6W5zruf62g_3_esWEgZ-cA",
+                    "url": "https://zkdwvxlhnamlrrtdgakp.supabase.co/storage/v1/object/sign/dre4m/shirts/art/goya/perspective-lying.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85ZDRlNzM5ZS03ZDI5LTQxNGUtYWZkMC03NjA1YTdjNDZmOGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkcmU0bS9zaGlydHMvYXJ0L2dveWEvcGVyc3BlY3RpdmUtbHlpbmcucG5nIiwiaWF0IjoxNzQ4ODgyMzQyLCJleHAiOjIwNjQyNDIzNDJ9.VcpoTMd81cfCJaRLxkOIC-Q9ga_1dmVrjsnpWunPT3w",
                     "alt": "perspective-lying"
                 },
                 {

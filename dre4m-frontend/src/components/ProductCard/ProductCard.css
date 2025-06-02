@@ -1,6 +1,7 @@
 .cards-container {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .cards-container:hover {
@@ -19,4 +20,5 @@
 
 .card-text {
     padding: 0.5rem;
+    font-size: 0.6rem;
 }

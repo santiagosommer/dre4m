@@ -3,7 +3,6 @@ import "./SideCart.css"
 
 export const SideCart = ({ open, onClose }) => {
     const { cart } = useCart();
-    console.log(cart)
 
     return (
         <div className={`cart${open ? " open" : ""}`}>

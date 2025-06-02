@@ -1,17 +1,16 @@
 import './ProductCard.css'
-import goya from '../../assets/goya-back-shirt.png'
-
 
 interface ProductCardProps {
     name: string;
     price: number;
+    image: string;
 }
 
-export const ProductCard = ({ name, price }: ProductCardProps) => {
+export const ProductCard = ({ name, price, image }: ProductCardProps) => {
     return (
         <>
             <div className='cards-container'>
-                <img src={goya} alt="shirt-image" />
+                <img src={image} alt="shirt-image" />
                 <div className='card-text'>
                     <h3>{name}</h3>
                     <p>${price}</p>

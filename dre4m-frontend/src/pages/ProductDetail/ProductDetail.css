@@ -57,6 +57,11 @@
     color: black;
 }
 
+.detail-info button {
+    align-self: center;
+    width: 50%;
+}
+
 .detail-info h1 {
     margin: 0;
 }

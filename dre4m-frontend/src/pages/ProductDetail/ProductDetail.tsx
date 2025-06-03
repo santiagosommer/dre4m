@@ -1,49 +1,32 @@
-import { Link, useParams } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
+import { Link, useParams } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 import { useProducts } from "../../context/ProductsContext"
 import "./ProductDetail.css"
-import { useState } from 'react';
-import ProductCard from '../../components/ProductCard/ProductCard';
+import { useState } from "react";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { Gallery } from "../../components/Gallery/Gallery";
 
 const SIZE_GUIDE = "https://zkdwvxlhnamlrrtdgakp.supabase.co/storage/v1/object/sign/dre4m/SIZE_GUIDE_STANDARD_TEE_FW.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5XzlkNGU3MzllLTdkMjktNDE0ZS1hZmQwLTc2MDVhN2M0NmY4ZSJ9.eyJ1cmwiOiJkcmU0bS9TSVpFX0dVSURFX1NUQU5EQVJEX1RFRV9GVy5wbmciLCJpYXQiOjE3NDgzNjYxMzEsImV4cCI6MjA2MzcyNjEzMX0.9vlgSYOKST05PGAt-hcoo4L3XEoyTHqzSCSmrZVM1so"
-
 
 export const ProductDetail = () => {
     const { id } = useParams();
     const { products } = useProducts();
     const product = products.find((p) => Number(p.id) === Number(id));
     if (!product) return <p>Producto no encontrado</p>;
-    const photos = [
-    ];
+    const photos = [];
     product.img.forEach(image => {
-        photos.push({ src: image.url, alt: image.alt });
+        photos.push({ id: image.id, src: image.src, thumb: image.thumb, alt: image.alt });
     });
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState("");
-    const [mainPhoto, setMainPhoto] = useState(photos[0]);
-
 
 
     return (
         <div className="detail-container">
             <section className="detail-products-container">
-                <div className="gallery-wrapper">
-                    <div className="viewer">
-                        <img src={mainPhoto.src} alt={mainPhoto.alt} className="main-image" />
-                    </div>
-                    <div className="img-gallery">
-                        {photos.map((photo, index) => (
-                            <img
-                                key={index}
-                                src={photo.src}
-                                alt={photo.alt}
-                                className={`thumb ${mainPhoto.src === photo.src ? 'active' : ''}`}
-                                onClick={() => setMainPhoto(photo)}
-                            />
-                        ))}
+                <Gallery images={photos} />
 
-                    </div>
-                </div>
+
                 <div className="detail-info">
                     <h1>{product.name}</h1>
                     <p>Precio: <strong>${product.price},00</strong></p>
@@ -63,7 +46,7 @@ export const ProductDetail = () => {
                     <button
                         className="add-btn"
                         onClick={() => addToCart(product)}
-                        disabled={!selectedSize || product.stock <= 0}
+                        disabled={!selectedSize || product.stock[selectedSize] <= 0}
                     >
                         Add to cart
                     </button>

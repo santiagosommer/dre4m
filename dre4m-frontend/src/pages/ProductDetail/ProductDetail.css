@@ -50,7 +50,7 @@
 }
 
 .size-guide {
-    width: 100%;
+    max-width: 80%;
 }
 
 .detail-info {
@@ -94,6 +94,11 @@
     grid-template-columns: repeat(3, 1fr);
     width: 50%;
     padding-left: 2rem;
+    gap: 1rem;
+}
+
+.recommended-products .cards-container {
+    gap: 10rem;
 }
 
 .recommended-products img {

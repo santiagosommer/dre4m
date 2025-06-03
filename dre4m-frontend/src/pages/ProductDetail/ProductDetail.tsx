@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useProducts } from "../../context/ProductsContext"
 import "./ProductDetail.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Gallery } from "../../components/Gallery/Gallery";
 
@@ -19,7 +19,14 @@ export const ProductDetail = () => {
     });
     const { addToCart } = useCart();
     const [selectedSize, setSelectedSize] = useState("");
+    const recommended = products
+        .filter(p => p.id !== product.id)
+        .slice(0, 2);
 
+
+    useEffect(() => {
+        setSelectedSize("");
+    }, [id]);
 
     return (
         <div className="detail-container">
@@ -54,20 +61,15 @@ export const ProductDetail = () => {
                 </div>
             </section >
             <section className="recommended-products">
-                <Link
-                    key={products["1"].id}
-                    to={`/product/${products["1"].id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                >
-                    <ProductCard name={products["1"].name} price={products["1"].price} image={products["1"].img[0].url} />
-                </Link>
-                <Link
-                    key={products["2"].id}
-                    to={`/product/${products["2"].id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                >
-                    <ProductCard name={products["2"].name} price={products["2"].price} image={products["2"].img[0].url} />
-                </Link>
+                {recommended.map((prod) => (
+                    <Link
+                        key={prod.id}
+                        to={`/product/${prod.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        <ProductCard name={prod.name} price={prod.price} image={prod.img[0].src} />
+                    </Link>
+                ))}
             </section>
         </div>
     );

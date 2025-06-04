@@ -52,7 +52,10 @@ export const ProductDetail = () => {
                     {selectedSize && <p>Disponibilidad: {product.stock[selectedSize]}</p>}
                     <button
                         className="add-btn"
-                        onClick={() => addToCart(product)}
+                        onClick={() => {
+                            product.size = selectedSize;
+                            addToCart(product);
+                        }}
                         disabled={!selectedSize || product.stock[selectedSize] <= 0}
                     >
                         Add to cart

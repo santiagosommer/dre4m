@@ -25,7 +25,7 @@ export const Store = () => {
                                 to={`/product/${products.id}`}
                                 style={{ textDecoration: "none", color: "inherit" }}
                             >
-                                <ProductCard name={products.name} price={products.price} image={products.img} />
+                                <ProductCard name={products.name} price={products.price} image={products.img[0].src} />
                             </Link>
                         ))}
                     </div>

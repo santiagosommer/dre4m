@@ -25,6 +25,12 @@ class Settings(BaseSettings):
     SECRET_KEY: str = ""
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 0
 
+    # EMAILS
+    SMTP_SERVER: str = ""
+    SMTP_PORT: int = 0
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+
     # Properties
     @property
     def IS_PRODUCTION(self) -> bool:
